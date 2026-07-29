@@ -47,7 +47,7 @@ export default function Home() {
       <nav className="sticky top-0 z-50 bg-neutral-50/90 backdrop-blur-md border-b border-neutral-200">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="text-2xl font-semibold tracking-tighter cursor-pointer" onClick={() => irA("inicio")}>
-            Antigüedades<span className="font-light"> con Alma</span>
+            El Rincón de Juan<span className="font-light"></span>
           </div>
           <div className="hidden md:flex space-x-8 text-sm font-medium">
             <button onClick={() => irA("inicio")} className="hover:text-neutral-500 transition-colors">Inicio</button>
