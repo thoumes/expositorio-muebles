@@ -1,53 +1,125 @@
-import fs from "fs";
-import path from "path";
-import TiendaClient from "./TiendaClient";
+import { Suspense } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { obtenerMuebles } from "@/lib/muebles";
+import TarjetaMueble from "@/components/TarjetaMueble";
+import FormularioContacto from "@/components/FormularioContacto";
 
-function obtenerImagenes(carpeta: string): string[] {
-  const ruta = path.join(process.cwd(), "public", carpeta);
-  if (!fs.existsSync(ruta)) return [];
+export default function HomePage() {
+  const muebles = obtenerMuebles();
+  const destacados = muebles.filter((m) => m.destacado).slice(0, 3);
 
-  return fs
-    .readdirSync(ruta)
-    .filter((archivo) => /\.(png|jpe?g|webp)$/i.test(archivo))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-    .map((archivo) => `/${carpeta}/${archivo}`);
-}
+  return (
+    <div>
+      {/* Hero */}
+      <section className="relative h-[calc(100vh-5rem)] flex flex-col items-center justify-center text-center text-white overflow-hidden">
+        <Image
+          src="/fondo.jpg"
+          alt="El Taller de Juan"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="relative z-10 px-6 max-w-3xl mx-auto">
+          <h1 className="font-serif text-5xl md:text-7xl font-normal tracking-tight mb-6">
+            Nueva vida a tu historia
+          </h1>
+          <p className="text-xl text-neutral-200 mb-10 max-w-2xl mx-auto">
+            Restauración artesanal de piezas únicas. Descubre nuestra colección de
+            muebles recuperados y dales un nuevo hogar.
+          </p>
+          <Link
+            href="/catalogo"
+            className="inline-block bg-white text-neutral-900 px-8 py-3 rounded-full text-sm font-medium hover:bg-neutral-200 transition-colors"
+          >
+            Ver colección
+          </Link>
+        </div>
+        <a
+          href="#destacados"
+          aria-label="Bajar a Piezas destacadas"
+          className="absolute bottom-8 z-10 text-white/80 hover:text-white transition-colors animate-bounce"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-8 h-8"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        </a>
+      </section>
 
-export default function Home() {
-  const muebles = [
-    { 
-      id: 1, 
-      titulo: "Aparador Hidalgo", 
-      descripcion: "Este imponente mueble castellano ha sido completamente rescatado y reinventado para convertirse en el centro de atención de cualquier estancia. Tras un laborioso proceso de decapado manual para retirar décadas de pintura anterior, el cuerpo principal ha renacido bajo un vibrante color rojo china, patinado a mano con betún de Judea para aportarle profundidad y un elegante efecto envejecido. El tablero superior contrasta cálidamente gracias a su madera teñida en tono miel oscuro con un acabado satinado. Una de las joyas de esta pieza de madera maciza son sus herrajes originales de hierro (tiradores, pasadores y bisagras), confeccionados a mano, que han sido restaurados y protegidos para lucir su belleza industrial. Su interior, renovado en un luminoso blanco satinado, lo hace tan práctico por dentro como espectacular por fuera. Toda la pieza cuenta con un acabado final a la cera incolora que protege la madera y le confiere un tacto sedoso inigualable.", 
-      precio: "690€",
-      medidas: { alto: "00 cm", ancho: "00 cm", fondo: "00 cm" },
-      imagenes: obtenerImagenes("product1")
-    },
-    { 
-      id: 2, 
-      titulo: "Cómoda Cabriolé 'Ciel de Nuit'", 
-      descripcion: "Esta coqueta cómoda de líneas clásicas y elegantes patas cabriolé ha sido transformada en una pieza romántica y llena de personalidad. Tras retirar su acabado original, el cuerpo del mueble ha sido trabajado con exquisito detalle mediante la aplicación artesanal de cinco capas de policromía, logrando una paleta única de azules y grises empolvados. Para realzar sus espectaculares tallas laterales y simular el encanto del desgaste natural por el paso del tiempo, se han añadido sutiles rozaduras en color oro y sombreados artesanales con betún de Judea. El tablero superior, teñido en un tono oscuro y rematado con cera incolora, ofrece un contraste sofisticado y cálido. La pieza se corona con sus tres clásicos tiradores originales de bronce, los cuales han sido cuidadosamente bruñidos a mano y protegidos para recuperar su esplendor. Un mueble que es pura poesía visual, protegido íntegramente para garantizar su durabilidad diaria.", 
-      precio: "320€",
-      medidas: { alto: "00 cm", ancho: "00 cm", fondo: "00 cm" },
-      imagenes: obtenerImagenes("product2")
-    },
-    { 
-      id: 3, 
-      titulo: "Silla Balloon Back 'Pureza'", 
-      descripcion: "Esta exquisita silla de comedor de estilo Louis Philippe destaca por el elegante perfil de su respaldo 'balloon back' y sus delicadas tallas frontales. Ha sido sometida a una restauración integral y minuciosa, despojándola de sus antiguos barnices para revelar la auténtica nobleza y el veteado natural de su madera maciza de nogal, ahora protegida con un suave barniz satinado incoloro. Su mayor tesoro se oculta en su interior: el asiento ha sido reconstruido por completo utilizando técnicas de alta tapicería tradicional. Se ha renovado la base de cinchas, restaurado y atado a mano los muelles originales, y acolchado con tela de arpillera y auténtica crin vegetal. Para culminar su renacer, ha sido tapizada con un resistente y luminoso tejido de algodón en blanco crudo por ambas caras, rematado con un elegante cordón textil. Una pieza clásica, robusta y atemporal, lista para aportar luz y sofisticación a cualquier rincón.", 
-      precio: "390€",
-      medidas: { alto: "00 cm", ancho: "00 cm", fondo: "00 cm" },
-      imagenes: obtenerImagenes("product3")
-    },
-    { 
-      id: 4, 
-      titulo: "Silla Cabriolé 'Jardín Dorado'", 
-      descripcion: "Esta encantadora silla de comedor con patas cabriolé es un juego de contrastes diseñado para enamorar. Su estructura de madera maciza ha sido completamente reforzada y trabajada a mano mediante un laborioso proceso de cepillado. Esta técnica ha permitido retirar los antiguos barnices y sacar a relucir el relieve natural de la veta, que ahora destaca gracias a un delicado teñido en blanco y una protección de barniz incoloro mate. El asiento, renovado desde su base con nuevas cinchas y espumas de alta densidad para garantizar su máxima comodidad, se viste de gala con una tapicería de acabado sedoso. Sus vibrantes motivos florales sobre un fondo dorado aportan un toque de lujo y luz, enmarcado a la perfección por un elegante cordón dorado en todo su contorno. Una pieza firme, cómoda y con un carácter visual innegable.", 
-      precio: "240€",
-      medidas: { alto: "00 cm", ancho: "00 cm", fondo: "00 cm" },
-      imagenes: obtenerImagenes("product4")
-    }
-  ];
+      {/* Piezas destacadas */}
+      <section id="destacados" className="max-w-7xl mx-auto px-6 py-24">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <div>
+            <h2 className="font-serif text-4xl font-medium">Piezas destacadas</h2>
+            <p className="text-neutral-500 mt-2">
+              Muebles únicos restaurados a mano, listos para un nuevo hogar.
+            </p>
+          </div>
+          <Link
+            href="/catalogo"
+            className="text-sm font-medium text-neutral-700 hover:text-neutral-900 underline underline-offset-4"
+          >
+            Ver todo el catálogo →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {destacados.map((mueble) => (
+            <TarjetaMueble key={mueble.id} mueble={mueble} />
+          ))}
+        </div>
+      </section>
 
-  return <TiendaClient muebles={muebles} />;
+      {/* Quiénes somos */}
+      <section
+        id="nosotros"
+        className="relative min-h-[75vh] flex flex-col items-center justify-center px-6 py-24 bg-white border-y border-neutral-200"
+      >
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="font-serif text-4xl font-medium mb-8">Quiénes somos</h2>
+          <p className="text-lg text-neutral-600 mb-6 leading-relaxed">
+            El Taller de Juan es un pequeño taller de restauración artesanal que
+            busca darle una nueva vida a piezas abandonadas y desechadas con el
+            objetivo de demostrar que siempre se le puede dar una segunda
+            oportunidad a lo que se cree perdido.
+          </p>
+          <p className="text-lg text-neutral-600 leading-relaxed">
+            Nuestro objetivo no es solo reparar, sino devolver el alma a estas
+            piezas, combinando técnicas artesanales tradicionales con acabados
+            modernos para que puedan vivirse y disfrutarse por muchas generaciones
+            más.
+          </p>
+        </div>
+      </section>
+
+      {/* Contacto */}
+      <section
+        id="contacto"
+        className="min-h-[85vh] flex flex-col items-center justify-center px-6 py-24 bg-neutral-100"
+      >
+        <div className="max-w-xl w-full mx-auto text-center">
+          <h2 className="font-serif text-4xl font-medium mb-6">Contacto</h2>
+          <p className="text-lg text-neutral-600 mb-8">
+            ¿Te interesa alguna de nuestras piezas del catálogo o quieres hacer un
+            encargo? Escríbenos directamente.
+          </p>
+          <Suspense fallback={<div className="h-64" />}>
+            <FormularioContacto />
+          </Suspense>
+        </div>
+      </section>
+    </div>
+  );
 }
