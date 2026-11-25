@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  obtenerMuebles,
-  obtenerMueblePorSlug,
-  WHATSAPP_NUMERO,
-} from "@/lib/muebles";
+import { obtenerMuebles, obtenerMueblePorSlug } from "@/lib/muebles";
+import { WHATSAPP_NUMERO } from "@/lib/config";
 import GaleriaDetalle from "@/components/GaleriaDetalle";
 
 export function generateStaticParams() {

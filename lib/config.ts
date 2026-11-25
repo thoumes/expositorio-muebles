@@ -1,0 +1,1 @@
+export const WHATSAPP_NUMERO = "34600000000"; // Pon aquí tu número real
