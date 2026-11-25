@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-export const WHATSAPP_NUMERO = "34600000000"; // Cambia por tu número real
-
 export type EstadoMueble = "disponible" | "reservado" | "vendido";
 
 export interface Mueble {
