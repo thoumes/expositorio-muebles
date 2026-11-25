@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { WHATSAPP_NUMERO } from "@/lib/muebles";
+import { WHATSAPP_NUMERO } from "@/lib/config";
 
 export default function FormularioContacto() {
   const searchParams = useSearchParams();
