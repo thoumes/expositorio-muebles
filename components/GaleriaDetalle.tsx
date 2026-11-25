@@ -100,27 +100,31 @@ export default function GaleriaDetalle({
           {imagenes.length > 1 && (
             <>
               <button
-                type="button"
-                aria-label="Foto anterior"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  anterior();
-                }}
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 bg-white/15 hover:bg-white/30 text-white w-11 h-11 rounded-full flex items-center justify-center cursor-pointer z-10"
-              >
-                ◀
-              </button>
-              <button
-                type="button"
-                aria-label="Foto siguiente"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  siguiente();
-                }}
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 bg-white/15 hover:bg-white/30 text-white w-11 h-11 rounded-full flex items-center justify-center cursor-pointer z-10"
-              >
-                ▶
-              </button>
+  type="button"
+  aria-label="Foto anterior"
+  onClick={(e) => {
+    e.stopPropagation();
+    anterior();
+  }}
+  className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 bg-white/15 hover:bg-white/30 backdrop-blur-sm text-white w-11 h-11 rounded-full flex items-center justify-center cursor-pointer z-10 transition-colors"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+  </svg>
+</button>
+<button
+  type="button"
+  aria-label="Foto siguiente"
+  onClick={(e) => {
+    e.stopPropagation();
+    siguiente();
+  }}
+  className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 bg-white/15 hover:bg-white/30 backdrop-blur-sm text-white w-11 h-11 rounded-full flex items-center justify-center cursor-pointer z-10 transition-colors"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+  </svg>
+</button>
             </>
           )}
 
